@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import axios from "axios";
 import "./App.css";
 
@@ -18,10 +18,10 @@ function App() {
   const pendingCount = totalTasks - completedCount;
 
   // Get tasks
-  const getTasks = async () => {
+  const getTasks = useCallback(async () => {
     const res = await axios.get(`${API}/api/tasks`);
     setTasks(res.data);
-  };
+  }, [API]);
 
   // Add task
   const addTask = async () => {
@@ -79,10 +79,9 @@ function App() {
     getTasks();
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     getTasks();
-  }, []);
+  }, [getTasks]);
 
   // Filter tasks
   const filteredTasks = tasks.filter((task) => {
