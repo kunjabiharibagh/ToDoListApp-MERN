@@ -11,13 +11,15 @@ function App() {
 
   const inputRef = useRef(null);
 
+  const API = process.env.REACT_APP_API_URL;
+
   const totalTasks = tasks.length;
   const completedCount = tasks.filter((task) => task.completed).length;
   const pendingCount = totalTasks - completedCount;
 
   // Get tasks
   const getTasks = async () => {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/tasks`);
+    const res = await axios.get(`${API}/api/tasks`);
     setTasks(res.data);
   };
 
@@ -25,7 +27,7 @@ function App() {
   const addTask = async () => {
     if (!title) return;
 
-    await axios.post(`${process.env.REACT_APP_API_URL}/api/tasks`, { title });
+    await axios.post(`${API}/api/tasks`, { title });
 
     setTitle("");
     getTasks();
@@ -34,15 +36,13 @@ function App() {
 
   // Delete task
   const deleteTask = async (id) => {
-    await axios.delete(`${process.env.REACT_APP_API_URL}/api/tasks
-      /${id}`);
+    await axios.delete(`${API}/api/tasks/${id}`);
     getTasks();
   };
 
   // Toggle completed
   const toggleCompleted = async (task) => {
-    await axios.put(`${process.env.REACT_APP_API_URL}/api/tasks
-      /${task._id}`, {
+    await axios.put(`${API}/api/tasks/${task._id}`, {
       completed: !task.completed,
     });
 
@@ -59,8 +59,7 @@ function App() {
   const updateTask = async () => {
     if (!editingTitle) return;
 
-    await axios.put(`${process.env.REACT_APP_API_URL}/api/tasks
-      /${editingId}`, {
+    await axios.put(`${API}/api/tasks/${editingId}`, {
       title: editingTitle,
     });
 
@@ -74,10 +73,7 @@ function App() {
     const completed = tasks.filter((task) => task.completed);
 
     await Promise.all(
-      completed.map((task) =>
-        axios.delete(`${process.env.REACT_APP_API_URL}/api/tasks
-          /${task._id}`)
-      )
+      completed.map((task) => axios.delete(`${API}/api/tasks/${task._id}`))
     );
 
     getTasks();
@@ -98,7 +94,6 @@ function App() {
     <div className="container">
       <h1>MERN To-Do App</h1>
 
-      {/* Input */}
       <div className="input-area">
         <input
           ref={inputRef}
@@ -116,7 +111,6 @@ function App() {
         </button>
       </div>
 
-      {/* Filters */}
       <div className="filter-buttons">
         <button
           className={filter === "all" ? "active-filter" : ""}
@@ -140,71 +134,72 @@ function App() {
         </button>
       </div>
 
-      {/* Clear Completed */}
       {filter !== "pending" && completedCount > 0 && (
         <button className="clear-btn" onClick={clearCompleted}>
           Clear Completed
         </button>
       )}
 
-      {/* Task List */}
       <ul>
         {filteredTasks.length === 0 ? (
           <p className="empty-msg">No tasks available</p>
         ) : (
-          filteredTasks.slice().reverse().map((task) => (
-            <li key={task._id}>
-              <div className="task-left">
-                <input
-                  type="checkbox"
-                  checked={task.completed}
-                  onChange={() => toggleCompleted(task)}
-                />
+          filteredTasks
+            .slice()
+            .reverse()
+            .map((task) => (
+              <li key={task._id}>
+                <div className="task-left">
+                  <input
+                    type="checkbox"
+                    checked={task.completed}
+                    onChange={() => toggleCompleted(task)}
+                  />
 
-                {editingId === task._id ? (
-                  <>
-                    <input
-                      type="text"
-                      value={editingTitle}
-                      onChange={(e) => setEditingTitle(e.target.value)}
-                    />
+                  {editingId === task._id ? (
+                    <>
+                      <input
+                        type="text"
+                        value={editingTitle}
+                        onChange={(e) => setEditingTitle(e.target.value)}
+                      />
 
-                    <button className="save-btn" onClick={updateTask}>
-                      Save
+                      <button className="save-btn" onClick={updateTask}>
+                        Save
+                      </button>
+                    </>
+                  ) : (
+                    <span
+                      style={{
+                        textDecoration: task.completed
+                          ? "line-through"
+                          : "none",
+                      }}
+                    >
+                      {task.title}
+                    </span>
+                  )}
+                </div>
+
+                <div>
+                  {editingId !== task._id && (
+                    <button
+                      className="edit-btn"
+                      onClick={() => startEditing(task)}
+                    >
+                      Edit
                     </button>
-                  </>
-                ) : (
-                  <span
-                    style={{
-                      textDecoration: task.completed
-                        ? "line-through"
-                        : "none",
-                    }}
-                  >
-                    {task.title}
-                  </span>
-                )}
-              </div>
+                  )}
 
-              <div>
-                {editingId !== task._id && (
                   <button
-                    className="edit-btn"
-                    onClick={() => startEditing(task)}
+                    className="delete-btn"
+                    onClick={() => deleteTask(task._id)}
                   >
-                    Edit
+                    Delete
                   </button>
-                )}
-
-                <button
-                  className="delete-btn"
-                  onClick={() => deleteTask(task._id)}
-                >
-                  Delete
-                </button>
-              </div>
-            </li>
-          ))
+                </div>
+              </li>
+            ))
         )}
       </ul>
     </div>
