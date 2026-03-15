@@ -1,0 +1,17 @@
+# node modules
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# environment files
+.env
+
+# logs
+*.log
+
+# build folders
+build/
+dist/
+
+# editor settings
+.vscode/
