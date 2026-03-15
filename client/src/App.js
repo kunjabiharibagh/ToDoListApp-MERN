@@ -17,7 +17,7 @@ function App() {
 
   // Get tasks
   const getTasks = async () => {
-    const res = await axios.get("http://localhost:5000/api/tasks");
+    const res = await axios.get("https://todolistapp-mern-dm05.onrender.com/api/tasks");
     setTasks(res.data);
   };
 
@@ -25,7 +25,8 @@ function App() {
   const addTask = async () => {
     if (!title) return;
 
-    await axios.post("http://localhost:5000/api/tasks", { title });
+    await axios.post("https://todolistapp-mern-dm05.onrender.com/api/tasks
+      ", { title });
 
     setTitle("");
     getTasks();
@@ -34,13 +35,15 @@ function App() {
 
   // Delete task
   const deleteTask = async (id) => {
-    await axios.delete(`http://localhost:5000/api/tasks/${id}`);
+    await axios.delete(`https://todolistapp-mern-dm05.onrender.com/api/tasks
+      /${id}`);
     getTasks();
   };
 
   // Toggle completed
   const toggleCompleted = async (task) => {
-    await axios.put(`http://localhost:5000/api/tasks/${task._id}`, {
+    await axios.put(`https://todolistapp-mern-dm05.onrender.com/api/tasks
+      /${task._id}`, {
       completed: !task.completed,
     });
 
@@ -57,7 +60,8 @@ function App() {
   const updateTask = async () => {
     if (!editingTitle) return;
 
-    await axios.put(`http://localhost:5000/api/tasks/${editingId}`, {
+    await axios.put(`https://todolistapp-mern-dm05.onrender.com/api/tasks
+      /${editingId}`, {
       title: editingTitle,
     });
 
@@ -72,7 +76,8 @@ function App() {
 
     await Promise.all(
       completed.map((task) =>
-        axios.delete(`http://localhost:5000/api/tasks/${task._id}`)
+        axios.delete(`https://todolistapp-mern-dm05.onrender.com/api/tasks
+          /${task._id}`)
       )
     );
 
