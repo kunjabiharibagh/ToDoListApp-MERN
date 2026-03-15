@@ -17,7 +17,7 @@ function App() {
 
   // Get tasks
   const getTasks = async () => {
-    const res = await axios.get("https://todolistapp-mern-dm05.onrender.com/api/tasks");
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/tasks`);
     setTasks(res.data);
   };
 
@@ -25,8 +25,7 @@ function App() {
   const addTask = async () => {
     if (!title) return;
 
-    await axios.post("https://todolistapp-mern-dm05.onrender.com/api/tasks
-      ", { title });
+    await axios.post(`${process.env.REACT_APP_API_URL}/api/tasks`, { title });
 
     setTitle("");
     getTasks();
@@ -35,14 +34,14 @@ function App() {
 
   // Delete task
   const deleteTask = async (id) => {
-    await axios.delete(`https://todolistapp-mern-dm05.onrender.com/api/tasks
+    await axios.delete(`${process.env.REACT_APP_API_URL}/api/tasks
       /${id}`);
     getTasks();
   };
 
   // Toggle completed
   const toggleCompleted = async (task) => {
-    await axios.put(`https://todolistapp-mern-dm05.onrender.com/api/tasks
+    await axios.put(`${process.env.REACT_APP_API_URL}/api/tasks
       /${task._id}`, {
       completed: !task.completed,
     });
@@ -60,7 +59,7 @@ function App() {
   const updateTask = async () => {
     if (!editingTitle) return;
 
-    await axios.put(`https://todolistapp-mern-dm05.onrender.com/api/tasks
+    await axios.put(`${process.env.REACT_APP_API_URL}/api/tasks
       /${editingId}`, {
       title: editingTitle,
     });
@@ -76,7 +75,7 @@ function App() {
 
     await Promise.all(
       completed.map((task) =>
-        axios.delete(`https://todolistapp-mern-dm05.onrender.com/api/tasks
+        axios.delete(`${process.env.REACT_APP_API_URL}/api/tasks
           /${task._id}`)
       )
     );
