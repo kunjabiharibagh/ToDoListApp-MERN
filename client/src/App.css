@@ -1,38 +1,178 @@
-.App {
-  text-align: center;
+body{
+  margin:0;
+  font-family: Arial, Helvetica, sans-serif;
+
+  /* Gradient background */
+  background: linear-gradient(135deg, #667eea, #764ba2);
+
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container{
+  width:420px;
+  margin:60px auto;
+
+  /* Modern gradient background */
+  background: linear-gradient(135deg, #8f906e, #f3f6ff);
+
+  padding:30px;
+  border-radius:16px;
+
+  /* Soft shadow for card effect */
+  box-shadow:0 12px 30px rgba(0,0,0,0.15);
+
+  /* Smooth hover animation */
+  transition:0.3s;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.container:hover{
+  transform:translateY(-5px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+}
+h1{
+  text-align:center;
+  margin-bottom:20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.input-area{
+  display:flex;
+  gap:10px;
 }
 
-.App-link {
-  color: #61dafb;
+.input-area input{
+  flex:1;
+  padding:10px;
+  border:1px solid #ddd;
+  border-radius:6px;
+  outline:none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.input-area input:focus{
+  border-color:#4CAF50;
+}
+
+.add-btn{
+  background:#4CAF50;
+  color:white;
+  border:none;
+  padding:10px 16px;
+  border-radius:6px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.add-btn:hover{
+  background:#43a047;
+}
+
+ul{
+  list-style:none;
+  padding:0;
+  margin-top:20px;
+}
+
+li{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px;
+  border-bottom:1px solid #eee;
+  transition:0.2s;
+}
+
+li:hover{
+  background:#fafafa;
+}
+
+.task-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+button{
+  border:none;
+  padding:6px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+/* Edit button */
+.edit-btn{
+  background:#2196F3;
+  color:white;
+}
+
+.edit-btn:hover{
+  background:#1976d2;
+}
+
+/* Delete button */
+.delete-btn{
+  background:#f44336;
+  color:white;
+}
+
+.delete-btn:hover{
+  background:#d32f2f;
+}
+
+/* Save button */
+.save-btn{
+  background:#6c8ecb;
+  color:white;
+}
+
+.save-btn:hover{
+  background:#4f6fa5;
+}
+
+/* Filters */
+
+.filter-buttons{
+  margin-top:15px;
+  display:flex;
+  gap:10px;
+}
+
+.filter-buttons button{
+  background:#f0f0f0;
+  color:#333;
+}
+
+.filter-buttons button:hover{
+  background:#ddd;
+}
+
+/* Active filter */
+
+.active-filter{
+  background:#4CAF50 !important;
+  color:white;
+}
+
+/* Clear completed */
+
+.clear-btn{
+  margin-top:12px;
+  background:#ff5722;
+  color:white;
+  padding:7px 14px;
+}
+
+.clear-btn:hover{
+  background:#e64a19;
+}
+
+/* Empty message */
+
+.empty-msg{
+  text-align:center;
+  margin-top:20px;
+  color:#888;
+  font-style:italic;
 }
